@@ -4,6 +4,8 @@ df = pandas.read_csv("hotels.csv", dtype={"id": str})
 
 
 class Hotel:
+    watermark = "The Real Estate Company"
+
     def __init__(self, local_hotel_id):
         self.hotel_id = local_hotel_id
         self.name = df.loc[df["id"] == self.hotel_id, "name"].squeeze()
@@ -25,6 +27,13 @@ class Hotel:
     def get_hotel_count(cls, data):
         return len(data)
 
+#     Magic method
+    def __eq__(self, other):
+        if self.hotel_id == other.hotel_id:
+            return True
+        else:
+            return False
+
 
 class ReservationTicket:
     def __init__(self, customer_name, hotel_object):
@@ -45,3 +54,7 @@ class ReservationTicket:
         name = self.customer_name.strip()
         name = name.title()
         return name
+
+    @staticmethod
+    def convert(amount):
+        return amount * 1.2
